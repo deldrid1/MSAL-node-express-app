@@ -9,6 +9,7 @@ var flash = require('connect-flash');
 var passport = require('passport');
 var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 var graph = require('./graph');
+var hbs = require('hbs');
 
 // Configure simple-oauth2
 const oauth2 = require('simple-oauth2').create({
@@ -121,6 +122,10 @@ app.use(function(req, res, next) {
 });
 
 // view engine setup
+hbs.registerHelper('json', function(context) {
+	return JSON.stringify(context, null, 3);
+});
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
